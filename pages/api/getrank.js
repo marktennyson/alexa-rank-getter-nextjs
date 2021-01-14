@@ -36,6 +36,6 @@ export default async function(req, res){
     const engagement = await data.engagement;
     const _endTime = Date.now();
     const timeTaken = parseFloat(((_endTime-_startTime)/1000).toFixed(2));
-    return res.json({alexa_rank: alexaRank, engagement:engagement, time_taken: timeTaken});
+    return res.json({alexa_rank:alexaRank, engagement:engagement, time_taken:timeTaken});
   }
   
