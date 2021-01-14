@@ -11,12 +11,14 @@ class RankScrapper{
         return new Promise((resolve, reject) => {
             try{
                 rp(this.url).then(function(html) {
-                    const alexaRank = parseInt($('.rankmini-rank', html).text().trim()
-                                        .split(" ")[0].trim().slice(1,).replace(",", ""));
+                    const extractedData = $('.rankmini-rank', html).text().trim().slice(1,)   
+                    const alexaRank = parseInt(extractedData.split(" ")[0].trim().replace(",", ""));
+                    const engagementData = extractedData.split(" ")[extractedData.split(" ").length - 1];
+                    const engagement = parseInt(engagementData.split(":")[0])*60+parseInt(engagementData.split(":")[1]);
                     if (!alexaRank) {
                         resolve({message:'Invalid Domain Name'})
                     }else{
-                        const data = {alexa_rank:alexaRank};
+                        const data = {alexa_rank:alexaRank, engagement:engagement};
                         resolve(data);
                     }
                 })
@@ -31,8 +33,9 @@ export default async function(req, res){
     const _startTime = Date.now();
     const data = await rs.get_rank();
     const alexaRank = await data.alexa_rank;
+    const engagement = await data.engagement;
     const _endTime = Date.now();
     const timeTaken = parseFloat(((_endTime-_startTime)/1000).toFixed(2));
-    return res.json({alexa_rank: alexaRank, time_taken: timeTaken});
+    return res.json({alexa_rank: alexaRank, engagement:engagement, time_taken: timeTaken});
   }
   
