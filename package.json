@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
+    "cors": "^2.8.5",
     "next": "10.0.5",
     "puppeteer": "^5.5.0",
     "react": "17.0.1",

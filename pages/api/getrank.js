@@ -1,5 +1,16 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
+import Cors from 'cors';
+import initMiddleware from '../../lib/init-middleware';
+
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 
+  }
+
+const cors = initMiddleware(
+    Cors(corsOptions)
+  )
 
 class RankScrapper{
     constructor(domain){
@@ -28,6 +39,7 @@ class RankScrapper{
 }
 
 export default async function(req, res){
+    await cors(req, res);
     const domain = req.query.domain;
     const rs = new RankScrapper(domain);
     const _startTime = Date.now();
