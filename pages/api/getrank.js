@@ -44,10 +44,14 @@ export default async function(req, res){
     const rs = new RankScrapper(domain);
     const _startTime = Date.now();
     const data = await rs.get_rank();
-    const alexaRank = await data.alexa_rank;
-    const engagement = await data.engagement;
+    let alexaRank = await data.alexa_rank;
+    let engagement = await data.engagement;
     const _endTime = Date.now();
     const timeTaken = parseFloat(((_endTime-_startTime)/1000).toFixed(2));
+    if (!alexaRank){
+        alexaRank="Invalid Domain Rank";
+        engagement = 0;
+    }
     return res.json({alexa_rank:alexaRank, engagement:engagement, time_taken:timeTaken});
   }
   
