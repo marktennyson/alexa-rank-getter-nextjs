@@ -49,7 +49,7 @@ export default async function(req, res){
     const _endTime = Date.now();
     const timeTaken = parseFloat(((_endTime-_startTime)/1000).toFixed(2));
     if (!alexaRank){
-        alexaRank="Invalid Domain Rank";
+        alexaRank="Invalid Domain Name";
         engagement = 0;
     }
     return res.json({alexa_rank:alexaRank, engagement:engagement, time_taken:timeTaken});
